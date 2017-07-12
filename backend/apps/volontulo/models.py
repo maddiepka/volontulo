@@ -8,6 +8,7 @@ import logging
 import os
 # pylint: disable=unused-import
 import uuid
+import pdb
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -56,10 +57,8 @@ class OffersManager(models.Manager):
             recruitment_status='closed',
         ).all()
 
-
 class Offer(models.Model):
     """Offer model."""
-
     OFFER_STATUSES = (
         ('unpublished', 'Unpublished'),
         ('published', 'Published'),
@@ -156,16 +155,24 @@ class Offer(models.Model):
 
     def create_new(self):
         """Set status while creating new offer."""
+        pdb.set_trace()
+
         self.offer_status = 'unpublished'
         self.recruitment_status = 'open'
 
-        if self.started_at or self.finished_at:
+        if (self.started_at is None) or (self.finished_at is None):
+            self.action_status = 'ongoing'
+            if self.started_at is None:
+                self.action_ongoing = True
+            if self.finished_at is None:
+                self.constant_coop = True
+        elif self.started_at or self.finished_at:
             self.action_status = self.determine_action_status()
 
     def determine_action_status(self):
-        """Determine action status by offer dates."""
+
         if (
-                (
+                  (
                     self.finished_at and
                     self.started_at < timezone.now() < self.finished_at
                 ) or
