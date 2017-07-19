@@ -132,5 +132,5 @@ class TestOfferStatusModel(TestCase):
         ongoing_offer2 = Offer.objects.get(title='Offer 4')
         self.assertEqual(ongoing_offer2.determine_action_status(), 'ongoing')
 
-        ongoing_offer3 = Offer.objects.get(title='Offer 4')
+        ongoing_offer3 = Offer.objects.get(title='Offer 5')
         self.assertEqual3ongoing_offer3.determine_action_status(), 'ongoing')
