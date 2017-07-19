@@ -166,14 +166,14 @@ class Offer(models.Model):
 
         if (
                 (
-                    not self.finished_at and
+                    self.finished_at is None and
                     self.started_at < timezone.now()
                 ) or
-                  (
-                    not self.started_at and
+                (
+                    self.started_at is None and
                     timezone.now() < self.finished_at
                 ) or
-                  (
+                (
                     self.finished_at and
                     self.started_at < timezone.now() < self.finished_at
                 )
