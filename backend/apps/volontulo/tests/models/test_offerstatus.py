@@ -101,6 +101,24 @@ class TestOfferStatusModel(TestCase):
             time_period=u'',
         )
 
+        # ongoing offer (no start date + end date)
+        Offer.objects.create(
+            organization=Organization.objects.create(
+                name=u'Some organization',
+                address=u'',
+                description=u''
+            ),
+            started_at=None,
+            finished_at=str(future),
+            description=u'',
+            requirements=u'',
+            time_commitment='12.12.2015',
+            benefits=u'',
+            location=u'',
+            title=u'Offer 5',
+            time_period=u'',
+        )
+
     def test__determine_action_status(self):
         u"""Verify action status."""
         finished_offer = Offer.objects.get(title='Offer 1')
@@ -114,3 +132,6 @@ class TestOfferStatusModel(TestCase):
 
         ongoing_offer2 = Offer.objects.get(title='Offer 4')
         self.assertEqual(ongoing_offer2.determine_action_status(), 'ongoing')
+
+        ongoing_offer3 = Offer.objects.get(title='Offer 5')
+        self.assertEqual(ongoing_offer3.determine_action_status(), 'ongoing')
