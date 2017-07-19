@@ -56,6 +56,7 @@ class OffersManager(models.Manager):
             recruitment_status='closed',
         ).all()
 
+
 class Offer(models.Model):
     """Offer model."""
     OFFER_STATUSES = (
