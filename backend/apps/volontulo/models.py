@@ -162,6 +162,7 @@ class Offer(models.Model):
             self.action_status = self.determine_action_status()
 
     def determine_action_status(self):
+        """Determine action status by offer dates."""
 
         if (
                 (
