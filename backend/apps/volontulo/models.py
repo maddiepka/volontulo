@@ -174,7 +174,6 @@ class Offer(models.Model):
                     timezone.now() < self.finished_at
                 ) or
                 (
-                    self.finished_at and
                     self.started_at < timezone.now() < self.finished_at
                 )
         ):
