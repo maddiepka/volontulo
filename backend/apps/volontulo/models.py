@@ -158,25 +158,23 @@ class Offer(models.Model):
         self.offer_status = 'unpublished'
         self.recruitment_status = 'open'
 
-        if (self.started_at is None) or (self.finished_at is None):
-            self.action_status = 'ongoing'
-            if self.started_at is None:
-                self.action_ongoing = True
-            if self.finished_at is None:
-                self.constant_coop = True
-        elif self.started_at or self.finished_at:
+        if self.started_at or self.finished_at:
             self.action_status = self.determine_action_status()
 
     def determine_action_status(self):
 
         if (
+                (
+                    not self.finished_at and
+                    self.started_at < timezone.now()
+                ) or
+                  (
+                    not self.started_at and
+                    timezone.now() < self.finished_at
+                ) or
                   (
                     self.finished_at and
                     self.started_at < timezone.now() < self.finished_at
-                ) or
-                (
-                    self.started_at < timezone.now() and
-                    not self.finished_at
                 )
         ):
             return 'ongoing'
