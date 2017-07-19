@@ -8,7 +8,6 @@ import logging
 import os
 # pylint: disable=unused-import
 import uuid
-import pdb
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -155,7 +154,6 @@ class Offer(models.Model):
 
     def create_new(self):
         """Set status while creating new offer."""
-        pdb.set_trace()
 
         self.offer_status = 'unpublished'
         self.recruitment_status = 'open'
